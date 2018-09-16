@@ -2,7 +2,7 @@ const URL = require('url');
 const path = require('path');
 const clone = require('clone');
 const fs = require('./utils/fs');
-const md5 = require('./utils/md5');
+const hash = require('./utils/hash');
 const isURL = require('./utils/is-url');
 const config = require('./utils/config');
 const syncPromise = require('./utils/syncPromise');
@@ -193,7 +193,7 @@ class Asset {
     if (!this.id) {
       this.id =
         this.options.production || this.options.scopeHoist
-          ? md5(this.relativeName, 'base64').slice(0, 4)
+          ? hash(this.relativeName, 'base64').slice(0, 4)
           : this.relativeName;
     }
 
@@ -235,7 +235,7 @@ class Asset {
   generateBundleName() {
     // Generate a unique name. This will be replaced with a nicer
     // name later as part of content hashing.
-    return md5(this.relativeName) + '.' + this.type;
+    return hash(this.relativeName) + '.' + this.type;
   }
 
   replaceBundleNames(bundleNameMap) {

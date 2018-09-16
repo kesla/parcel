@@ -1,6 +1,6 @@
 const Asset = require('../Asset');
 const localRequire = require('../utils/localRequire');
-const md5 = require('../utils/md5');
+const hash = require('../utils/hash');
 const {minify} = require('terser');
 
 class VueAsset extends Asset {
@@ -62,7 +62,7 @@ class VueAsset extends Asset {
     let result = [];
 
     let hasScoped = this.ast.styles.some(s => s.scoped);
-    let id = md5(this.name).slice(-6);
+    let id = hash(this.name).slice(-6);
     let scopeId = hasScoped ? `data-v-${id}` : null;
     let optsVar = '$' + id;
 

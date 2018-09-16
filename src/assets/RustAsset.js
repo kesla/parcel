@@ -8,7 +8,7 @@ const fs = require('../utils/fs');
 const Asset = require('../Asset');
 const config = require('../utils/config');
 const pipeSpawn = require('../utils/pipeSpawn');
-const md5 = require('../utils/md5');
+const hash = require('../utils/hash');
 
 const RUST_TARGET = 'wasm32-unknown-unknown';
 const MAIN_FILES = ['src/lib.rs', 'src/main.rs'];
@@ -168,7 +168,7 @@ class RustAsset extends Asset {
   async rustcBuild() {
     // Get output filename
     await fs.mkdirp(this.options.cacheDir);
-    let name = md5(this.name);
+    let name = hash(this.name);
     this.wasmPath = path.join(this.options.cacheDir, name + '.wasm');
 
     // Run rustc to compile the code

@@ -1,6 +1,6 @@
 const fs = require('./utils/fs');
 const path = require('path');
-const md5 = require('./utils/md5');
+const hash = require('./utils/hash');
 const objectHash = require('./utils/objectHash');
 const pkg = require('../package.json');
 const logger = require('./Logger');
@@ -39,9 +39,9 @@ class FSCache {
   }
 
   getCacheFile(filename) {
-    let hash = md5(this.optionsHash + filename);
+    let h = hash(this.optionsHash + filename);
 
-    return path.join(this.dir, hash.slice(0, 2), hash.slice(2) + '.json');
+    return path.join(this.dir, h.slice(0, 2), h.slice(2) + '.json');
   }
 
   async getLastModified(filename) {
