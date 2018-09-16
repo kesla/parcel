@@ -51,6 +51,7 @@
     "json5": "^1.0.1",
     "micromatch": "^3.0.4",
     "mkdirp": "^0.5.1",
+    "murmurhash-native": "^3.2.4",
     "node-forge": "^0.7.1",
     "node-libs-browser": "^2.0.0",
     "opn": "^5.1.0",
@@ -71,8 +72,7 @@
     "toml": "^2.3.3",
     "tomlify-j0.4": "^3.0.0",
     "v8-compile-cache": "^2.0.0",
-    "ws": "^5.1.1",
-    "xxhash": "^0.2.4"
+    "ws": "^5.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

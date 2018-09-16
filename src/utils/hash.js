@@ -1,16 +1,15 @@
 const fs = require('fs');
-const XXHash = require('xxhash');
-
-const HashStream = XXHash.Stream;
+const {murmurHash} = require('murmurhash-native');
+const {createHash} = require('murmurhash-native/stream');
 
 function hash(string, encoding = 'hex') {
-  return XXHash.hash(Buffer.from(string), 0, encoding);
+  return murmurHash(string, 0, encoding);
 }
 
 hash.file = function(filename) {
   return new Promise((resolve, reject) => {
     fs.createReadStream(filename)
-      .pipe(new HashStream(0, 'hex'))
+      .pipe(createHash('murmurHash', {seed: 0, encoding: 'hex'}))
       .on('finish', function() {
         resolve(this.read());
       })
