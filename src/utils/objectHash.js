@@ -1,17 +1,8 @@
+const stringify = require('fast-json-stable-stringify');
 const hash = require('./hash');
 
 function objectHash(object) {
-  return hash(
-    Object.keys(object)
-      .sort()
-      .map(key => {
-        let val = object[key];
-        return typeof val === 'object' && val
-          ? key + objectHash(val)
-          : key + val;
-      })
-      .join('')
-  );
+  return hash(stringify(object));
 }
 
 module.exports = objectHash;
