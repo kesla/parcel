@@ -1,13 +1,13 @@
-const crypto = require('crypto');
+const XXHash = require('xxhash');
 
 function objectHash(object) {
-  let hash = crypto.createHash('md5');
+  let hash = new XXHash(0);
   for (let key of Object.keys(object).sort()) {
     let val = object[key];
     if (typeof val === 'object' && val) {
-      hash.update(key + objectHash(val));
+      hash.update(Buffer.from(key + objectHash(val)));
     } else {
-      hash.update(key + val);
+      hash.update(Buffer.from(key + val));
     }
   }
 
