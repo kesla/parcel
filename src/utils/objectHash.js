@@ -1,17 +1,17 @@
-const XXHash = require('xxhash');
+const hash = require('./hash');
 
 function objectHash(object) {
-  let hash = new XXHash(0);
-  for (let key of Object.keys(object).sort()) {
-    let val = object[key];
-    if (typeof val === 'object' && val) {
-      hash.update(Buffer.from(key + objectHash(val)));
-    } else {
-      hash.update(Buffer.from(key + val));
-    }
-  }
-
-  return hash.digest('hex');
+  return hash(
+    Object.keys(object)
+      .sort()
+      .map(key => {
+        let val = object[key];
+        return typeof val === 'object' && val
+          ? key + objectHash(val)
+          : key + val;
+      })
+      .join('')
+  );
 }
 
 module.exports = objectHash;

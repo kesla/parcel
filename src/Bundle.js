@@ -1,5 +1,5 @@
 const Path = require('path');
-const XXHash = require('xxhash');
+const hash = require('./utils/hash');
 
 /**
  * A Bundle represents an output file, containing multiple assets. Bundles can have
@@ -273,12 +273,7 @@ class Bundle {
   }
 
   getHash() {
-    let hash = new XXHash(0);
-    for (let asset of this.assets) {
-      hash.update(Buffer.from(asset.hash));
-    }
-
-    return hash.digest('hex');
+    return hash([...this.assets].map(asset => asset.hash).join(''));
   }
 }
 
