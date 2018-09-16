@@ -1,17 +1,16 @@
-const crypto = require('crypto');
 const fs = require('fs');
+const XXHash = require('xxhash');
+
+const HashStream = XXHash.Stream;
 
 function md5(string, encoding = 'hex') {
-  return crypto
-    .createHash('md5')
-    .update(string)
-    .digest(encoding);
+  return XXHash.hash(Buffer.from(string), 0, encoding);
 }
 
 md5.file = function(filename) {
   return new Promise((resolve, reject) => {
     fs.createReadStream(filename)
-      .pipe(crypto.createHash('md5').setEncoding('hex'))
+      .pipe(new HashStream(0, 'hex'))
       .on('finish', function() {
         resolve(this.read());
       })

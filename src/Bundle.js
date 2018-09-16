@@ -1,5 +1,5 @@
 const Path = require('path');
-const crypto = require('crypto');
+const XXHash = require('xxhash');
 
 /**
  * A Bundle represents an output file, containing multiple assets. Bundles can have
@@ -273,9 +273,9 @@ class Bundle {
   }
 
   getHash() {
-    let hash = crypto.createHash('md5');
+    let hash = new XXHash(0);
     for (let asset of this.assets) {
-      hash.update(asset.hash);
+      hash.update(Buffer.from(asset.hash));
     }
 
     return hash.digest('hex');

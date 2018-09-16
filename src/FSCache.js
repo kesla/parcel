@@ -40,6 +40,7 @@ class FSCache {
 
   getCacheFile(filename) {
     let hash = md5(this.optionsHash + filename);
+
     return path.join(this.dir, hash.slice(0, 2), hash.slice(2) + '.json');
   }
 
