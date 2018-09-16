@@ -20,6 +20,7 @@ class FSCache {
         version: pkg.version
       })
     );
+    this.rootDir = options.rootDir;
   }
 
   async ensureDirExists() {
@@ -39,7 +40,7 @@ class FSCache {
   }
 
   getCacheFile(filename) {
-    let h = hash(this.optionsHash + filename);
+    let h = hash(this.optionsHash + path.relative(this.rootDir, filename));
 
     return path.join(this.dir, h.slice(0, 2), h.slice(2) + '.json');
   }
